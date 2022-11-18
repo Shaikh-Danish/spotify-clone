@@ -32,7 +32,7 @@
 														x="10" y="65" rx="5">
 												</rect>
 										</svg>
-								</div>
+								</button>
 						</li>
 				</ul>
 		</nav>
@@ -105,14 +105,17 @@
 						<!-- Questions list -->
 						<ul class="faq__questions-container">
 								<li class="faq__question-box faq__question--border">
+										<!-- question one -->
 										<div class="faq__question">
-												<p>How do I create a playlist?</p>
+												<label for="question-one">How do I create a playlist?</label>
 												<div>
 														<img src="img/down-arrow.png" alt="" class="arrow-down">
 												</div>
 										</div>
+										<!-- answer one -->
+										<input type="checkbox" id="question-one" class="question">										
 										<div class="faq__answer">
-												<p>Playlists are a great way to save collections of music, either for your own listening or to share. </br></br>To create one:</br></br></p>
+												<p>Playlists are a great way to save collections of music, either for your own listening or to share.</br></br>To create one:</br></br></p>
 												<ol class="faq__list">
 														<li>Tap Your Library.</li>
 														<li>Tap <span class="clr-green">CREATE</span>.</li>
@@ -122,12 +125,15 @@
 										</div>
 								</li>
 								<li class="faq__question-box faq__question--border">
+										<!-- question two -->
 										<div class="faq__question">
-												<p>How do I activate Data Saver mode?</p>
+												<label for="question-two">How do I activate Data Saver mode?</label>
 												<div>
 														<img src="img/down-arrow.png" alt="" class="arrow-down">
 												</div>
 										</div>
+										<!-- answer two -->
+										<input type="checkbox" id="question-two" class="question">
 										<div class="faq__answer">
 												<ol class="faq__list">
 														<li>Tap <span class="clr-green">Home</span>.</li>
@@ -138,12 +144,15 @@
 										</div>
 								</li>
 								<li class="faq__question-box faq__question--border"">
+										<!-- question three -->
 										<div class="faq__question">
-												<p>is it only possible to shuffle play music?</p>
+												<label for="question-three">is it only possible to shuffle play music?</label>
 												<div>
 														<img src="img/down-arrow.png" alt="" class="arrow-down">
 												</div>
 										</div>
+										<!-- answer three -->
+										<input type="checkbox" id="question-three" class="question">
 										<div class="faq__answer">
 												<p>Any playlist with the shuffle icon will play on shuffle.</p>
 												</br>
@@ -151,10 +160,13 @@
 										</div>
 								</li>
 								<li class="faq__question-box">
+										<!-- question four -->
 										<div class="faq__question">
-												<p>Where can I find Podcasts?</p>
+												<label for="question-four">Where can I find Podcasts?</label>
 												<p><img src="img/down-arrow.png" alt="" class="arrow-down"></p>
 										</div>
+										<!-- answer four -->
+										<input type="checkbox" id="question-four" class="question">
 										<div class="faq__answer">
 												<p>Tap <span class="clr-green">Search</span>. Under <span class="clr-green">Browse All</span>, tap Podcasts.</p>
 										</div>
@@ -167,11 +179,12 @@
 				</section>
 		</main>
 		<footer class="footer">
-				<header class="footer__header">
-						<a href="" class="footer__logo">
-								<img src="img/Spotify_Logo_RGB_White.png" alt="spotify" class="logo">
-						</a>
-				</header>
+				<div class="footer__section">
+						<header class="footer__header">
+								<a href="" class="footer__logo">
+										<img src="img/Spotify_Logo_RGB_White.png" alt="spotify" class="logo">
+								</a>
+						</header>
 				<div class="footer__main">
 						<section>
 								<h4 class="footer__head">company</h4>
@@ -223,35 +236,36 @@
 						</section>
 				</div>
 				<div class="social">
-						<a href="" class="social__instagram">
-								<img src="" alt="">
+						<a href="https://www.instagram.com/spotify/" class="social__instagram">
+								<img src="img/instagram.png" alt="instagram">
 						</a>
-						<a href="" class="social__twitter">
-								<img src="" alt="">
+						<a href="https://twitter.com/spotify" class="social__twitter">
+								<img src="img/twitter.png" alt="twitter">
 						</a>
-						<a href="" class="social__facebook">
-								<img src="" alt="">
+						<a href="https://m.facebook.com/Spotify" class="social__facebook">
+								<img src="img/facebook-app-symbol.png" alt="facebook">
 						</a>
+				</div>
 				</div>
 				<div class="bottom">
 						<div class="bottom__list">
-						<ul class="bottom__links">
-								<li class="bottom__link">
-										<a href="">legal</a>
-								</li>
-								<li class="bottom__link">
-										<a href="">privacy center</a>
-								</li>
-								<li class="bottom__link">
-										<a href="">privacy policy</a>
-								</li>
-								<li class="bottom__link">
-										<a href="">cookies</a>
-								</li>
-								<li class="bottom__link">
-										<a href="">about ads</a>
-								</li>
-						</ul>
+								<ul class="bottom__links">
+										<li class="bottom__link">
+												<a href="">legal</a>
+										</li>
+										<li class="bottom__link">
+												<a href="">privacy center</a>
+										</li>
+										<li class="bottom__link">
+												<a href="">privacy policy</a>
+										</li>
+										<li class="bottom__link">
+												<a href="">cookies</a>
+										</li>
+										<li class="bottom__link">
+												<a href="">about ads</a>
+										</li>
+								</ul>
 						</div>
 				</div>
 		</footer>
