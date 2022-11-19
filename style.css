@@ -13,8 +13,8 @@
 		--clr-gray: #84888A;
 		--clr-lightgray: rgba(0, 0, 0, 0.05);	
 		
-		--fs-large: 1.7rem;
-		--fs-largexl: 2.5rem;
+		--fs-large: 2rem;
+		--fs-largexl: 3rem;
 }
 
 body {
@@ -22,7 +22,7 @@ body {
 }
 
 .logo {
-		width: 110px;
+		width: 90px;
 }
 
 .btn {
@@ -30,7 +30,7 @@ body {
 		background-color: var(--clr-white);
 		border: none;
 		border-radius: 25px;
-		font-weight: 900;
+		font-weight: 700;
 		letter-spacing: 1px;
 		margin-top: 2.5em;
 		padding: 1.2em 2.7em;
@@ -51,22 +51,23 @@ body {
 
 /* Navigation */
 
-nav {
+.primary-header {
 		background-color: var(--clr-black);
 		padding: .9em 1em;
 }
 
-.navigation {
+.primary__header {
+		margin: auto;
+		max-width: 1000px;
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin: auto;
-		max-width: 1000px;
 }
 
-.navigation__btn {
+.hamburger__btn {
 		background: transparent;
 		border: none;
+		cursor: pointer;
 }
 
 .hamburger__line {
@@ -90,18 +91,34 @@ nav {
 		opacity: 0;
 }
 
+/* nav items */
+
+.primary-nav {
+		display: none;
+}
+
+.nav__items {
+		display: flex;
+		flex-direction: column;
+		list-style: none;
+}
+
+
 /* Header */
 
 .hero {
-		background-image: linear-gradient(to left top, #8B17D1, #D72FB1);
+		background-image: linear-gradient(to left top, #8B17D1 30%, #D72FB1 110%);
+		
 }
 
 .hero__header {
 		max-width: 1000px;
+		min-height: 450px;
 		display: flex;
 		flex-direction: column;
+		justify-content: center;
 		margin: auto;
-		padding: 4em 1em;
+		padding: 0em 1em;
 }
 
 
@@ -117,16 +134,18 @@ nav {
 .why__header,
 .faq__header {
 		text-align: center;
-		margin: 1.2em 0 .7em 0;
 		font-size: 1.75rem;
 		font-weight: 900;
+}
+
+.why__header {
+		margin: 1em 0 1.5em 0;
 }
 
 .why__box {
 		display: flex;
 		align-items: center;
-		margin: 1.4em 0;
-		gap: 1.5em;
+		margin-bottom: 2.2em;
 }
 
 .why__bg {
@@ -134,6 +153,7 @@ nav {
 		padding: 1.25em;
 		border-radius: 100%;
 		transform: translateY(-25px);
+		margin-right: 1.25em;
 }
 
 .why__img {
@@ -142,7 +162,8 @@ nav {
 }
 
 .why__section h3 {
-		font-weight: 700;
+		font-weight: 900;
+		font-size: 1.2;
 }
 
 .why__section p {
@@ -154,7 +175,7 @@ nav {
 
 .free {
 		background-image: linear-gradient(#D532AE, #5909E9);
-		padding: 2em 4em;
+		padding: 5em 4em;
 		color: white;
 		text-align: center;
 		margin: 1em 0;
@@ -171,16 +192,16 @@ nav {
 .faq {
 		max-width: 850px;
 		margin: auto;
+		padding: 1.2em 0;
+}
+
+.faq__header {
+		margin-bottom: .5em;
 }
 
 .faq__questions-container {
 		list-style: none;
-		padding: .5em 0em 1em 0em;
 }
-
-.faq__question-box:hover {
-		background-color: var(--clr-);
-} 
 
 .faq__question-box:hover label {
 		text-decoration: underline;
@@ -190,6 +211,7 @@ nav {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		margin: 0 1em;
 }
 
 .faq__question label {
@@ -197,7 +219,7 @@ nav {
 		display: block;
 		font-size: 1.1rem;
 		font-weight: 900;
-		padding: 1.5em 1em;
+		padding: 1.5em .5em;
 		width: 100%;
 }
 
@@ -208,6 +230,7 @@ nav {
 .faq__question--border {
 		border-bottom: 1px solid var(--clr-lightgray, #ffffff);
 }
+
 .faq__question-box input[type="checkbox"] {
 		display: none;
 }
@@ -234,12 +257,12 @@ nav {
 
 .play {
 		background-image: linear-gradient(to left bottom, #6C0EE0, #CB2BB6 130%);
-		padding: 4em 1em;
+		padding: 5em 1em;
 		text-align: center;
 }
 
 .play p {
-		font-size: var(--fs-large);
+		font-size: var(--fs-largexl);
 }
 
 
@@ -340,16 +363,13 @@ nav {
 @media screen and (min-width:768px) {
 		:root {
 				--fs-large: 2.2rem;
-				--fs-largexl: 2.8rem;
+				--fs-largexl: 4rem;
 		}
 		.hero__header {
 				padding: 6em 1.5em;
 		}
 		nav {
 				padding: 1em 1.5em;
-		}
-		.navigation__btn {
-				display: none;
 		}
 		.why__container {
 				flex-direction: row;

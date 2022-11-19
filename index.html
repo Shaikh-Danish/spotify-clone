@@ -9,16 +9,16 @@
 		<script src="main.js" defer></script>
 </head>
 <body>
-		<nav>
-				<ul class="navigation">
-						<li>
+		<header class="primary-header">
+				<ul class="primary__header">
+						<li class="primary__logo">
 								<a href="./index.html">
 										<img src="img/Spotify_Logo_RGB_White.png" alt="spotify" class="logo">
 								</a>
 						</li>
-						<li>
-								<button class="navigation__btn"  aria-expanded="false">
-										<svg class="hamburger" viewBox="0 0 100 100" width="30" fill="#fff">
+						<li class="hamburger">
+								<button class="hamburger__btn"  aria-expanded="false">
+										<svg class="hamburger__icon" viewBox="0 0 100 100" width="30" fill="#fff">
 												<rect class="hamburger__line hamburger--top" 
 														width="80" height="10"
 														x="10" y="25" rx="5">
@@ -35,13 +35,30 @@
 								</button>
 						</li>
 				</ul>
-		</nav>
-		<header class="hero">
+				<nav class="primary-nav">
+						<ul class="nav__items">
+										<li class="nav__item">
+												<a href="">Premium</a>
+										</li>
+										<li class="nav__item">
+												<a href="">Support</a>
+										</li>
+										<li class="nav__item">
+												<a href="">Download</a>
+										</li>
+										<li class="dash">	</li>
+										<li class="nav__item">
+												<a href="">Log in</a>
+										</li>
+						</ul>
+				</nav>
+		</header>
+		<section class="hero">
 				<div class="hero__header">
 						<p class="hero__para main-head">Play millions of songs and podcasts, for free.</p>
 						<button class="btn">get spotify free</button>
 		  </div>
-		</header>
+		</section>
 		<main class="container">
 				
 				<!-- Why Spotify Section -->
