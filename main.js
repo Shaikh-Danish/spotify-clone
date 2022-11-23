@@ -19,6 +19,7 @@ document.getElementById('log-in').addEventListener('click', function() {
 		/*query = window.open(url);
 		console.log(query);*/
 		this.href = url;
+		this.textContent = url;
 		console.log(url)
 });
 
