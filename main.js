@@ -1,39 +1,25 @@
 'use strict';
 
 const hamburger = document.getElementById('hamburger-btn');
-const clientId = '6db36a01e85845119836d789ac6c1e61';
-const redirectUri = 'https://shaikh-danish.github.io/spotify-clone/';
+const CLIENT_ID = '6db36a01e85845119836d789ac6c1e61';
+//const REDIRECT_URI = 'https://shaikh-danish.github.io/spotify-clone/';
+const REDIRECT_URI = 'http://localhost:8080/';
 const scope = 'user-read-private user-read-email';
+const ACCESS_TOKEN_KEY = 'accessToken';
 
 function spotifyLogIn() {
 		let url = 'https://accounts.spotify.com/authorize';
 		url += '?response_type=token';
-		url += '&client_id=' + 				encodeURIComponent(clientId);
+		url += '&client_id=' + 				encodeURIComponent(CLIENT_ID);
 		url += '&scope=' + encodeURIComponent(scope);
-		url += '&redirect_uri=' + encodeURIComponent(redirectUri);
-		window.location = url;
-		console.log(window.location.search);
-		document.body.onload = function() {
-				this.textContent = url;
-		}
+		url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI);
+	//window.open(url, 'login', "width=400, height=600");
+	window.location.href = url;
+	//window.location = 'hello';
+	window.location = `${localStorage.getItem('access_token')}/hello`;
 }
 
 function openNavMenu() {
-		/*
-		let isOpened = hamburger.getAttribute('aria-expanded');
-		
-		if (isOpened === 'false')
-		{
-				hamburger.ariaExpanded = 'true';
-				//prevent background scrolling
-				document.body.style.overflowY = 'hidden';
-		}
-		else {
-				hamburger.ariaExpanded = 'false';
-				//enable scrolling
-				document.body.style.overflowY = 'visible';
-		}
-		*/
 		
 		hamburger.ariaExpanded = hamburger.ariaExpanded === 'false' ? 'true' : 'false';
 		
@@ -44,12 +30,10 @@ document.getElementById('log-in').addEventListener('click', spotifyLogIn);
 
 hamburger.addEventListener('click', openNavMenu);
 
-
-const getGenres = async (token) => {
-		const result = await fetch(`https://api.spotify.com/v1/browse/categories?locale=sv_US`, {
-		method: 'GET',
-  headers: { 'Authorization' : 'Bearer ' + token}
-  });
-  const data = await result.json();
-  return data.categories.items;
-}
+window.addEventListener('load', function() {
+		const token = localStorage.getItem(ACCESS_TOKEN_KEY);
+		localStorage.setItem('access_token', window.location.hash);
+		console.log(localStorage.getItem('access_token'));
+		body.innerHTML = localStorage.getItem('access_token');
+		window.location = 'hash';
+});

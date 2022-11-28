@@ -1,0 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@400;500;700;900&display=swap');
+
+* {
+		box-sizing: border-box;
+		margin: 0;
+		padding: 0;
+}
+
+:root {
+		--clr-black: #181818;
+		--clr-white: #ffffff;
+		--clr-darkgreen: #1DB954;
+}
+
+body {
+		background-color: var(--clr-black);
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		height: 100vh;
+}
+
+main {
+		color: var(--clr-white);
+		letter-spacing: .5px;
+		text-align: center;
+}
+
+.log-in {
+		background-color: var(--clr-darkgreen);
+		border: none;
+		border-radius: 1.5em;
+		color: inherit;
+		font-size: 1rem;
+		font-weight: 500;
+		padding: .8em 2em;
+		margin: 1.7em 0;
+		text-transform: uppercase;
+}
