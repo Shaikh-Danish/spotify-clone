@@ -27,6 +27,7 @@ main {
 }
 
 .log-in {
+		display: block;
 		background-color: var(--clr-darkgreen);
 		border: none;
 		border-radius: 1.5em;
@@ -36,4 +37,5 @@ main {
 		padding: .8em 2em;
 		margin: 1.7em 0;
 		text-transform: uppercase;
+		text-decoration: none;
 }
