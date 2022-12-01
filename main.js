@@ -1,9 +1,9 @@
 'use strict';
 
 const logInBtn = document.getElementById('log-in');
-const APP_URL = 'https://shaikh-danish.github.io/spotify-clone`;
+const APP_URL = 'https://shaikh-danish.github.io/spotify-clone';
 const CLIENT_ID = '6db36a01e85845119836d789ac6c1e61';
-const REDIRECT_URI = `${APP_URL}/index.html`;
+const REDIRECT_URI = `${APP_URL}`;
 const scope = 'user-read-private user-read-email';
 const TOKEN_PARAM_KEYS = ['access_token', 'token_type', 'expires_in'];
 let logIn = true;
