@@ -42,13 +42,13 @@ document.addEventListener('DOMContentLoaded', function() {
 				const access_Token = localStorage.getItem(TOKEN_PARAM_KEYS[0]);
 		
 				if (access_Token) {
-						window.location.href = `${APP_URL}/dashboard/index.html`;
+						window.location = `${APP_URL}/dashboard/dashboard.html`;
 						return ;
 				}	
 				if (accessToken) {	
 						window.close();		
 						setItemsInLocalStorage(accessToken, tokenType, expiresIn);
-						window.location.href = `${APP_URL}/dashboard/index.html`;
+						window.location = `${APP_URL}/dashboard/dashboard.html`;
 				}
 				else {
 						window.close();
