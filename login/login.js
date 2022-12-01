@@ -6,6 +6,7 @@ const CLIENT_ID = '6db36a01e85845119836d789ac6c1e61';
 const REDIRECT_URI = `${APP_URL}/login/login.html`;
 const scope = 'user-read-private user-read-email';
 const TOKEN_PARAM_KEYS = ['access_token', 'token_type', 'expires_in'];
+let logIn = true;
 
 
 function spotifyLogIn() {
@@ -14,10 +15,10 @@ function spotifyLogIn() {
 		url += '&client_id=' + 				encodeURIComponent(CLIENT_ID);
 		url += '&scope=' + encodeURIComponent(scope);
 		url += '&redirect_uri=' + encodeURIComponent(REDIRECT_URI);
-	//window.open(url, 'login', "width=400, height=600");
-	this.href = url;
+		//window.location = url;
+		window.open(url, 'login', 'width=400, height=600');
+		logIn = true;
 }
-
 
 function getUrlParams(hash) {
 		const urlParams = new URLSearchParams(hash);
@@ -25,69 +26,36 @@ function getUrlParams(hash) {
 		return TOKEN_PARAM_KEYS.map((key) => urlParams.get(key))
 }
 
-function setItemsInLocalStorage(accessToken, tokenType, expiresIn) {
-		/*
+function setItemsInLocalStorage(...tokens) {
 		tokens.forEach((currToken, i) => {
 				localStorage.setItem(TOKEN_PARAM_KEYS[i], currToken);
 		});
-		*/
-		localStorage.setItem('access_token', accessToken);
-		localStorage.setItem('token_type', tokenType);
-		localStorage.setItem('expires_in', expiresIn);
 }
 
-
-logInBtn.addEventListener('click', spotifyLogIn, {once: true});
-
-
-document.querySelector('.header').addEventListener('click', function() {
-		const accessToken = localStorage.getItem(TOKEN_PARAM_KEYS[0]);
-		console.log(accessToken);
-});
+logInBtn.addEventListener('click', spotifyLogIn);
 
 
-
-
-window.addEventListener('load', function() {
-		const access_Token = localStorage.getItem(TOKEN_PARAM_KEYS[0]);
-		
-		if (access_Token) {
-				window.location.href = `${APP_URL}/dashboard/index.html`;
-		}
-		
-		const hash = window.location.hash.replace('#', '?');
-		const [accessToken, tokenType, expiresIn] = getUrlParams(hash);	
-		
-		if (accessToken) {
-				setItemsInLocalStorage(accessToken, tokenType, expiresIn);
-				window.location.href = `${APP_URL}/dashboard/index.html`;
-				//parent.location.hash = '';
-		}
-		
-		/*
-		if (window.opener !== null && !window.opener.closed) {
-				window.focus();
-				if (window.location.hash.includes('error')) {
-						window.close();
-				}
+document.addEventListener('DOMContentLoaded', function() {
+		if (logIn) {
 				const hash = window.location.hash.replace('#', '?');
-	
-				const [accessToken, tokenType, expiresIn] = getUrlParams(hash);		
+				const [accessToken, tokenType, expiresIn] = getUrlParams(hash);
+				const access_Token = localStorage.getItem(TOKEN_PARAM_KEYS[0]);
 		
-				if (accessToken) {
-						window.close();
-						window.opener.setItemsInLocalStorage(accessToken, tokenType, expiresIn);
+				if (access_Token) {
+						window.location.href = `${APP_URL}/dashboard/index.html`;
+						return ;
+				}	
+				if (accessToken) {	
+						window.close();		
+						setItemsInLocalStorage(accessToken, tokenType, expiresIn);
+						window.location.href = `${APP_URL}/dashboard/index.html`;
 				}
 				else {
 						window.close();
-				}
+				}		
+				logIn = false;
 		}
-		*/
 });
-
-
-
-
 
 
 /* 
