@@ -1,0 +1,157 @@
+* {
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+}
+
+:root {
+		--clr-black: #181818;
+		--clr-white: #ffffff;
+		--clr-darkgreen: #1DB954;
+}
+
+body {
+		background-color: var(--clr-black);
+		color: var(--clr-white);
+		padding: ;
+}
+
+/* layout */
+
+body {
+		display: grid;
+		grid-template-areas: 
+				'header'
+				'main'
+				'now-playing'
+				'side-nav';
+		grid-template-rows: 10vh 1fr 10vh auto;
+		height: 100vh;
+}
+
+.header {
+		grid-area: header;
+}
+
+.content {
+		grid-area: main;
+}
+
+.now-playing {
+		grid-area: now-playing;
+}
+
+.side-nav {
+		grid-area: side-nav;
+}
+
+.bg-none {
+		background: none;
+		border: none;
+}
+
+/* utility */
+
+.img-width {
+		width: 28px;
+}
+
+.clr-white {
+		filter: invert(100%);
+}
+
+.padding {
+		padding: 0 1em;
+}
+
+.flex {
+		display: flex;
+		align-items: center;
+		gap: .5em;
+}
+
+
+/* header */
+
+.header {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+}
+
+.user-option {
+		position: relative;
+}
+
+.user-option__btn {
+		border: .05em solid #ffffff;
+		border-radius: 1.7em;
+		cursor: pointer;
+		padding: .4em .9em;
+}
+
+.user__profile-name {
+		color: #ffffff;
+}
+
+.user__profile .img-width {
+		width: 20px;
+		transform: translateY(1px);
+}
+
+.user-option__list {
+		background-color: var(--clr-black);
+		border-radius: 0.1em;
+		cursor: none;
+		list-style: none;
+		margin-top: .4em;
+		opacity: 0;
+		position: absolute;
+		padding: .5em;		
+		transition: all 0.1s ease-in;
+		transform: translateY(-1em);
+		text-align: right;	
+		width: 7em;
+}
+
+.user-option[aria-expanded=true] .user-option__list {
+		transform: translateY(0em);
+		opacity: 1;
+		cursor: pointer;
+}
+
+.user-option__item a {
+		color: white;
+		text-decoration: none;
+}
+
+
+/* Content */
+
+.content {
+		background: hotpink;
+}
+
+/* Nav */
+
+.side-nav {
+
+}
+
+.nav-items {
+		display: flex;
+		list-style: none;
+		justify-content: space-around;
+		padding: 1em 0;
+}
+
+@media screen and (min-width:768px){
+		body {
+				grid-template-areas: 
+						'side-nav header' 
+						'side-nav main'
+						'now-playing now-playing';
+				grid-template-columns: 200px 1fr;
+				grid-template-rows: auto 1fr auto;
+		}
+}
