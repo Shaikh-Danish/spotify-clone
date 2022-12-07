@@ -1,8 +1,10 @@
+const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
+
 document.addEventListener('DOMContentLoaded', function() {
 		const accessToken = localStorage.getItem('accessToken');
 		if (accessToken) {
-				window.location.href = 'http://localhost:8080/dashboard/dashboard.html'; 
+				window.location.href = `${APP_URL}/dashboard/dashboard.html`; 
 		} else {
-				window.location.href = 'http://localhost:8080/login/login.html';
+				window.location.href = `${APP_URL}/login/login.html`;
 		}
 });
