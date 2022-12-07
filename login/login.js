@@ -6,7 +6,7 @@ const APP_URL = 'https://shaikh-danish.github.io/spotify-clone';
 const CLIENT_ID = '6db36a01e85845119836d789ac6c1e61';
 */
 
-const APP_URL = "http://localhost:8080";
+const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
 const CLIENT_ID = "642cb717168743ec8536f7e48e77f320";
 const REDIRECT_URI = `${APP_URL}/login/login.html`;
 const scope = "user-read-private user-read-email playlist-read-private user-follow-read user-library-read";
