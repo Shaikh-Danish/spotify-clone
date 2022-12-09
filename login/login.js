@@ -16,8 +16,7 @@ function authorizeUser() {
 		url += "&client_id=" + 				encodeURIComponent(CLIENT_ID);
 		url += "&scope=" + encodeURIComponent(scope);
 		url += "&redirect_uri=" + encodeURIComponent(REDIRECT_URI);
-		
-		//window.open(url, "login", "width=600, height=800");
+	
 		window.location.href = url;
 }
 
@@ -53,20 +52,6 @@ window.addEventListener("load", function() {
 				
 		if (accessToken) {
 				setItemsInLocalStorage(accessToken, tokenType, expiresIn);
-					//	window.close();
 				window.location.href = `${APP_URL}/dashboard/dashboard.html`;						
 		}
-		/*
-		else {
-				window.close();
-		}
-		
-		
-		if (window.opener !== null && !window.opener.closed) {
-				window.focus()
-				if (window.location.href.includes('error')) {
-						window.close();
-				}		
-		}
-		*/
 });
