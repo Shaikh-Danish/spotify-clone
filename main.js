@@ -1,4 +1,4 @@
-const APP_URL = "http://localhost:8080";
+const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
 
 document.addEventListener('DOMContentLoaded', function() {
 		const accessToken = localStorage.getItem('accessToken');
