@@ -1,5 +1,7 @@
 "use strict";
 
+import APP_URL from '../common.js';
+
 const logOutBtn = document.getElementById('log-out');
 const userProfileBtn = document.getElementById("user-option-btn");
 
@@ -7,16 +9,16 @@ const userProfileBtn = document.getElementById("user-option-btn");
 const ACCESS_TOKEN_KEY = "access_token";
 const TOKEN_TYPE_KEY = "token_type";
 const EXPIRES_IN_KEY = "expires_in";
-const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
+//const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
+//const APP_URL = "http://127.0.0.1:8080";
 
 const BASE_API_URL = "https://api.spotify.com/v1";
 const ENDPOINT = {
 		"userinfo": "me",
 		"featuredPlaylist": "browse/featured-playlists?limit=10",
-		"recentlyPlayed": "me/player/recently-played",
-		"tracks": "tracks/"
+		"toplist": "browse/categories",
+		"playlist": "me/playlists"
 }
-const contentHeaders = ["Recently played"];
 
 /* API related funtions */
 function getAccessToken() {
@@ -48,13 +50,16 @@ function createApiConfig({ accessToken, tokenType }, method = "GET") {
 		}
 }
 
+/* Api related funtions */
+
 async function fetchRequest(endpoint) {
 		const creds = createApiConfig(getAccessToken());
+		
 		const url = `${BASE_API_URL}/${endpoint}`;
 		const request = await fetch(url, creds);
 		return request.json();
 }
-/* API related funtions */
+
 
 async function loadUserProfile() {
 		const profileImg = document.getElementById("user-profile-img");
@@ -69,79 +74,74 @@ async function loadUserProfile() {
 		}
 }
 
-async function getFeaturedPlaylist() {
-		const { playlists: { items } } = await fetchRequest(ENDPOINT.featuredPlaylist);
-		
-		const featuredSection = document.getElementById("featured");
-		
-		featuredSection.innerHTML = `
-				<div class="feature__header">
-						<h2>Featured</h2>
-				</div>
-				<div class="featured__playlist">	
-						<ul class="featured__playlist-list cards-list flex" id="featured-playlist">
-						</ul>								 
-				</div>`;
-				
-			const featuredList = document.getElementById("featured-playlist");
-			
-			items.forEach(item => {
-					const {name: playlistName, description, id, images} = item;
-					
-					const listItem = document.createElement("li");
-					listItem.classList.add("featured__item", "card-item");
-					
-					listItem.innerHTML = `
-							<div class="featured__playlist-img">
-							 	<img src="${images[0].url}" alt="${playlistName}" class="card-img-width">
-							</div>
-							<div class="featured__playlist-info">
-									<h4 class="featured__playlist-name">${playlistName}</h4>
-							 	<p class="featured__playlist-description">${description}</p>
-							</div>`;
-					featuredList.appendChild(listItem);
-			});
+
+
+function onPlaylistClick(event) {
+		console.log(this.outerHTML);
 }
 
-/*
-async function displayRecentTracks() {
-		const recent = await fetchRequest(ENDPOINT.recentlyPlayed);
+async function loadPlaylists(endpoint, sectionId, key) {
+		const playlist = await fetchRequest(endpoint);
+		const { items } = playlist[key] ?? playlist;
+
+		const cardSection = document.querySelector(`#${sectionId} .card-section`);
 		
-		const contentSection = document.createElement("section");
-		contentSection.classList.add("recent");
-		
-		contentSection.innerHTML = `
-				<div class="recent__header">
-								<h2>Recently played</h2>
-		 	</div>
-		 	<div class="recent__tracks">
-				  <ul class="recent__tracks-list cards-list" id="recent-track">
-						</ul>
-				</div>
-			`;
-			
-			const cardsList = document.getElementById("recent-track");
-			
-			recent.items.forEach(item => {
-					const { name: trackName, id: trackId} = item.track;
-					const track = await fetchRequest(`${ENDPOINT.track}/${trackId}`})
-			});
-		document.getElementById("content").appendChild(contentSection);
+		items.forEach(item => {
+				const {name: playlistName, description, id, images, icons} = item;
+				
+				const card = document.createElement("div");
+				card.classList.add("card");
+				
+				card.innerHTML = `
+						<img src="${images?.[0].url ?? icons?.[0].url}" alt="${playlistName}" class="card-img-width">
+						<p class="card-name">${playlistName}</p>
+						${description !== undefined ? `<p class="card-description">${description}</p>`: ""}`;
+				card.id = id;
+			 cardSection.appendChild(card);
+				card.addEventListener("click", onPlaylistClick);	
+		});
 		
 }
-*/
+
+function playlists() {		
+		loadPlaylists(ENDPOINT.featuredPlaylist, "featured-playlist", "playlists");
+		loadPlaylists(ENDPOINT.toplist, "top-playlist", "categories");
+		loadPlaylists(ENDPOINT.playlist, "user-playlist")
+		
+}
+
+function fillContent() {
+		const contentSection = document.getElementById("content");
+		const playlistMap = new Map([
+				["featured", "featured-playlist"],
+				["top playlists", "top-playlist"],
+				["playlist", "user-playlist"]
+		]);
+		let content = "";
+		
+		for (const [type, id] of playlistMap) {
+				content += `
+				<section id="${id}">
+						<h3 class="section-header">${type}</h3>
+						<section class="card-section"></section>
+				</section>`;
+		}
+		contentSection.innerHTML = content;
+}
 
 userProfileBtn.addEventListener("click", function() {
 		userProfileBtn.ariaExpanded = userProfileBtn.ariaExpanded === "false" ? "true": "false";
-		
-		//displayRecentTracks();
+		//import { dope } from "../api.js";
+		//console.log(dope)
+		console.log(APP_URL);
 });
 
 
-logOutBtn.addEventListener("click", logOut);
+//logOutBtn.addEventListener("click", logOut);
 
 document.addEventListener("DOMContentLoaded", function() {
 		loadUserProfile();
-		getFeaturedPlaylist();
+		fillContent();
+		playlists();
 });
 
