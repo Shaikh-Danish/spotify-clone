@@ -1,1 +1,1 @@
-export const APP_URL = "http://127.0.0.1:8080";
+export const APP_URL = "https://shaikh-danish.github.io/spotify-clone";

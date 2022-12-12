@@ -1,7 +1,5 @@
 "use strict";
 
-import APP_URL from '../common.js';
-
 const logOutBtn = document.getElementById('log-out');
 const userProfileBtn = document.getElementById("user-option-btn");
 
@@ -9,7 +7,7 @@ const userProfileBtn = document.getElementById("user-option-btn");
 const ACCESS_TOKEN_KEY = "access_token";
 const TOKEN_TYPE_KEY = "token_type";
 const EXPIRES_IN_KEY = "expires_in";
-//const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
+const APP_URL = "https://shaikh-danish.github.io/spotify-clone";
 //const APP_URL = "http://127.0.0.1:8080";
 
 const BASE_API_URL = "https://api.spotify.com/v1";
@@ -133,6 +131,7 @@ userProfileBtn.addEventListener("click", function() {
 		userProfileBtn.ariaExpanded = userProfileBtn.ariaExpanded === "false" ? "true": "false";
 		//import { dope } from "../api.js";
 		//console.log(dope)
+		import APP_URL from '../common.js';
 		console.log(APP_URL);
 });
 
