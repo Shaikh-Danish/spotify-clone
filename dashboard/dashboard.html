@@ -3,10 +3,12 @@
 <head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-		<script type="module" src="dashboard.js" defer></script>
-		<script type="module" src="../common.js" defer></script>
-		<link rel="stylesheet" href="dashboard.css"></link>
+		
+		<link rel="stylesheet" href="./dashboard.css"></link>
 		<title>Spotify</title>
+		<script src="./common.js" defer></script>
+		<script src="../api.js" defer></script>
+	 <script src="./dashboard.js" defer></script>
 </head>
 <body>
 		<header class="header padding">
@@ -16,48 +18,45 @@
 						</span>
 					 <span class="user__profile-name" id="user-name"></span>
 						<span class="arrow-down clr-white">&#9660;</span>
+						<ul class="user-option__list">
+								<li class="user-option__item" id="log-out">
+										<a href="#">log out</a>
+								</li>
+						</ul>
 				</button>
-				<ul class="user-option__list">
-						<li class="user-option__item" id="log-out">
-								<a href="#">log out</a>
-						</li>
-				</ul>
 		</header>
 		
 		<main id="content" class="content padding">
-				<p></p>
+				
 		</main>
 		
-			<section class="now-playing padding">now playing</section>
+		<section class="now-playing padding">now playing</section>
 		
 		<section class="side-nav padding">
 				<nav>
 						<ul class="nav-items">
 								<li class="side-nav__homepage">
 										<button class="bg-none">
-												<img src="icons/homepage.png" alt="" class="img-width clr-white">
+												<img src="icons/homepage.png" alt="home" class="img-width clr-white">
 										</button>
 								</li>
 								<li class="side-nav__search">
 										<button class="bg-none">
-												<img src="icons/search.png" alt="" class="img-width clr-white">
+												<img src="icons/search.png" alt="search" class="img-width clr-white">
 										</button>
 								</li>
 								<li class="side-nav__playlist">
 										<button class="bg-none">
-												<img src="./icons/playlist.png" alt="" class="img-width clr-white">
+												<img src="./icons/playlist.png" alt="playlist" class="img-width clr-white">
 										</button>
 								</li>
 								<li class="side-nav__profile">
 										<button class="bg-none">
-												<img src="./icons/recent.png" alt="" class="img-width clr-white">
+												<img src="./icons/recent.png" alt="recent" class="img-width clr-white">
 										</button>
 								</li>
 						</ul>
 				</nav>
 		</section>
-		
-		<script src="https://kit.fontawesome.com/e8822e307a.js" crossorigin="anonymous"></script>
 </body>
 </html>
-

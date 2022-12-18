@@ -1,12 +1,25 @@
 "use strict";
 
 const logInBtn = document.getElementById("log-in");
+const CLIENT_ID = '6db36a01e85845119836d789ac6c1e61';
 const APP_URL = 'https://shaikh-danish.github.io/spotify-clone';
 //const CLIENT_ID = "dc155e58180c4d939649ee3ae2f0c5f3";
 //const APP_URL = "http://127.0.0.1:8080";
-const CLIENT_ID = '6db36a01e85845119836d789ac6c1e61';
 const REDIRECT_URI = `${APP_URL}/login/login.html`;
-const scope = "user-read-private user-read-email playlist-read-private user-follow-read user-library-read user-read-recently-played user-top-read playlist-read-collaborative user-read-playback-state user-read-currently-playing";
+const scope = `
+		user-read-playback-state
+		user-read-currently-playing
+		playlist-read-private
+		playlist-read-collaborative
+		user-read-private 
+		user-follow-read
+		user-read-playback-position
+		user-top-read
+		user-read-recently-played
+		user-library-read
+		user-read-email   
+		user-read-private	`;
+		
 const ACCESS_TOKEN_KEY = "access_token";
 const TOKEN_TYPE_KEY =  "token_type";
 const EXPIRES_IN_KEY = "expires_in";
