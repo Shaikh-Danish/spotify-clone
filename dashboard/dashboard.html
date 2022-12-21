@@ -2,45 +2,93 @@
 <html lang="en">
 <head>
 		<meta charset="UTF-8">
-		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
 		
 		<link rel="stylesheet" href="./dashboard.css"></link>
 		<title>Spotify</title>
 		<script src="./common.js" defer></script>
 		<script src="../api.js" defer></script>
 	 <script src="./dashboard.js" defer></script>
+	 
 </head>
 <body>
 		<header class="header padding">
-				<button id="user-option-btn" class="user-option__btn bg-none flex" aria-expanded="false">
+				<div id="user-option-btn" class="user-option__btn bg-none flex" aria-expanded="false">
+						<!-- user profile icon -->
 						<span class="user__profile">
-								<img src="./icons/user.png" alt="" class="img-width clr-white user__profile-img" id="user-profile-img">
+								<i id="user-profile-icon" class="fa-regular fa-user"></i>
 						</span>
 					 <span class="user__profile-name" id="user-name"></span>
-						<span class="arrow-down clr-white">&#9660;</span>
+					 <!-- arrow down -->
+						<span class="arrow-down">
+								<i class="fa-solid fa-caret-down"></i>
+						</span>
 						<ul class="user-option__list">
 								<li class="user-option__item" id="log-out">
 										<a href="#">log out</a>
 								</li>
 						</ul>
-				</button>
+				</div>
 		</header>
 		
 		<main id="content" class="content padding">
-				
+	
 		</main>
 		
-		<section class="now-playing padding">now playing</section>
+		<section class="now-playing padding">
+				
+				<section class="song">
+						<div class="song__image">
+								<img id="track-image" src="" alt="">
+						</div>
+						<div class="song__info">
+								<p id="track-name" class="song__name">song name</p>
+								<p id="track-artists" class="song__artist">song artist</p>
+						</div>
+				</section>
+				
+				<section class="song-control">
+						<div class="control-btn">
+								<!-- backward button -->
+								<button class="bg-none song__control-btn">
+										<i class="fa-solid fa-backward-step fa-2xl"></i>
+								</button>
+								<!-- play song button -->
+								<button class="bg-none song__control-btn song--play-btn">
+									 <i class="fa-solid fa-circle-play fa-2xl"></i>
+								</button>
+								<!-- forward button -->
+								<button class="bg-none song__control-btn">
+										<i class="fa-solid fa-forward-step fa-2xl"></i>
+										</button>
+						</div>
+						<div class="song__timeline">
+								<span class="song__time-completed">0:00</span>
+								<div class="song__progress"></div>
+								<span id="track-length" class="song__total-time">0:00</span>
+						</div>
+				</section>
+				
+				<section class="volume-control">
+						<!-- volume button -->
+						<button class="bg-none song__control-btn">
+								<i class="fa-solid fa-volume-low fa-xl"></i>
+						</button>
+						<!-- volume slider -->
+						<input class="volume-slider" type="range" value="100" min="0" max="100" />
+				</section>
+		</section>
 		
 		<section class="side-nav padding">
 				<nav>
 						<ul class="nav-items">
+								<!-- home button -->
 								<li class="side-nav__homepage">
-										<button class="bg-none">
-												<img src="icons/homepage.png" alt="home" class="img-width clr-white">
+										<button class="bg-none clr-white">
+												<i class="fa-solid fa-house fa-3x"></i>
 										</button>
 								</li>
-								<li class="side-nav__search">
+								<!--<li class="side-nav__search">
 										<button class="bg-none">
 												<img src="icons/search.png" alt="search" class="img-width clr-white">
 										</button>
@@ -54,9 +102,11 @@
 										<button class="bg-none">
 												<img src="./icons/recent.png" alt="recent" class="img-width clr-white">
 										</button>
-								</li>
+								</li>-->
 						</ul>
 				</nav>
 		</section>
+		
+		<script src="https://kit.fontawesome.com/cf496ac0ba.js" crossorigin="anonymous"></script>
 </body>
 </html>

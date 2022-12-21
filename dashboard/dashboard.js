@@ -2,16 +2,55 @@
 
 /* Select Elements */
 const logOutBtn = document.getElementById('log-out');
-const userProfileBtn = document.getElementById("user-option-btn");
+const profileBtn = document.getElementById("user-option-btn");
 const mainContent = document.getElementById("content");
+let currentTrack = null;
+
+function timeFormatPlaylist(hour, min) {
+		if (min === 60) {
+				min = 0;
+				++hour;
+		}
+		
+		if (hour >= 1)
+				return `${hour}h ${min}min`;
+		else if (hour >= 1 && min === 0)
+				return `${hour}h`;
+		else return `${min}min`;
+}
+
+function timeFormatTrack(hour, min, sec) {
+		if (sec === 60) {
+				sec = 0;
+				++min;
+		}
+		if (hour >= 1) {
+				return `
+				${String(hour).padStart(2, "0")}:
+				${String(min).padStart(2, "0")}:
+				${String(sec).padStart(2, "0")}`;
+		}
+		else {
+				return `
+				${String(min).padStart(2, "0")}:${String(sec).padStart(2, "0")}
+				`;
+		}
+}
+
+/* Format time from millisecs to mins and secs */
+function formatTime(durationMs, formatFn) {
+		let hour = Math.floor(durationMs / 3600000);
+		let min = Math.floor(
+				((hour >= 1) 
+				? durationMs % 3600000
+				: durationMs) / 60000);
+		let sec = Math.floor((durationMs % 60000) / 1000);
+		
+		return formatFn(hour, min, sec);
+}
 
 
-userProfileBtn.addEventListener("click", function() {
-		userProfileBtn.ariaExpanded = userProfileBtn.ariaExpanded === "false" ? "true": "false";
-});
-
-
-function createSectionContent(name,  images, description) {
+function createSectionContent({ name,  images, description }) {
 		const content = `
 						<img src="${(images[0].url ?? images)}" alt="${name}" class="playlist-img">
 						<p class="playlist-name line-clamp">${name}</p>
@@ -26,14 +65,14 @@ function createSectionContent(name,  images, description) {
 async function loadUserProfile() {
 	const { display_name: displayName, images } = await fetchRequest(ENDPOINT.userinfo);
 	
-		const profileImg = document.getElementById("user-profile-img");
+		const profileImg = document.getElementById("user-profile-icon");
 		const displayNameElement = document.getElementById("user-name");
 		
 		displayNameElement.textContent = displayName;
 		
 		// if user profile image
 		if (images?.length) {
-				profileImg.src = images[0].url;
+				profileImg.outerHTML = `<img class="img-width" src="${images[0].url}" alt="profile">`;
 		}
 }
 
@@ -41,13 +80,10 @@ async function loadUserProfile() {
 function onPlaylistClick(event, id) {	
 		const section = { 
 				"type": "playlist",
-				"id": id,
-				"name": this.getAttribute("name"),
-				"img": this.querySelector("img").src,
-				"info": this.querySelector(".playlist-description").textContent,
+				"id": id
 		};
 		
-		history.pushState(section, "", `playlist/${this.getAttribute("name").replace(/\s/g, "")}`);	
+		history.pushState(section, "", `playlist/${name.replace(/\s/g, "")}`);	
 		loadSection(section);
 }
 
@@ -64,18 +100,20 @@ async function loadPlaylists(endpoint, sectionId, key) {
 		items.forEach(item => {
 				const { name, description, id, images } = item;
 				const card = document.createElement("DIV");
-				card.classList.add("card", "playlist-card")
+				card.className = "card playlist-card";
 				card.id = id;
-				card.setAttribute("name", name);
-				card.innerHTML = createSectionContent(name, images, description);
-				card.addEventListener("click", (event) => onPlaylistClick.call(card, event, id));
-								cardSection.insertAdjacentElement("afterbegin", card)
+				card.innerHTML = createSectionContent(item);
+				card.addEventListener("click", (event) => {
+						onPlaylistClick(event, id, name);
+				});
+					cardSection.insertAdjacentElement("afterbegin", card)
 		});
 }
 
 
 function playlists() {		
 		loadPlaylists(ENDPOINT.featuredPlaylist, "featured-playlist", "playlists");
+		loadPlaylists(ENDPOINT.toplists, "top-playlist", "playlists");
 		loadPlaylists("me/" + ENDPOINT.playlist, "user-playlist")	;
 }
 
@@ -83,7 +121,8 @@ function playlists() {
 function fillDashboardContent() {
 		const playlistMap = new Map([
 				["featured", "featured-playlist"],
-				["playlist", "user-playlist"]
+				["top list", "top-playlist"],
+				["playlist", "user-playlist"],
 		]);
 		let content = "";
 		
@@ -100,45 +139,97 @@ function fillDashboardContent() {
 
 
 async function fillPlaylistContent(playlistId) {
-		let playlistTotalTime = 0;
-		let content = "";
-		let i = 0
 	
-		const { description, name, images, followers: { total: likesCount }, tracks: { items } } = await fetchRequest(`${ENDPOINT.playlist}/${playlistId}`);
+		const { description, name, images, followers: { total: likesCount }, tracks } = await fetchRequest(`${ENDPOINT.playlist}/${playlistId}`);
 		
-		let elem = createSectionContent(history.state.name, history.state.img, history.state.info);
-					
+		mainContent.classList.remove("padding");
+		let elem = createSectionContent({ description, name, images });
+				
 		const heroDiv = document.createElement("DIV");
-		heroDiv.classList.add("playlist-header");
-		heroDiv.insertAdjacentHTML("afterbegin", elem);
-		console.log(heroDiv.outerHTML)
-		content = `
+		heroDiv.className = "playlist-header padding";
+		heroDiv.innerHTML = `
+				${elem}
+				<div class="playlist-followers">
+						<p class="playlist-likes">${likesCount.toLocaleString("en-US")} likes</p>
+						•
+					 <p id="playlist-length" class="playlist-time"></p>	
+				</div>
+				`;
+				
+		mainContent.innerHTML = `
 				<section id="playlist-section">
 						${heroDiv.outerHTML}
 						<div class="tracks" id="tracks"></div>
 				</section>`;
-				
-		mainContent.innerHTML = content;
 		
+		const playlistTotalTime = loadTracks(tracks);
+		document.getElementById("playlist-length").textContent = formatTime(playlistTotalTime, timeFormatPlaylist)
+}
+
+
+function loadTracks( { items } ) {
+  
+  let trackNo = 1;
+  let content = "";
+  let playlistTotalTime = 0;
+ 
   const trackSection = document.querySelector("#playlist-section #tracks");
+  
   items.forEach((item) => {
+    
   		const { track: { artists, duration_ms, id, name, preview_url } } = item;
+  		
+ 		 const trackDiv = document.createElement("DIV");
+ 		 trackDiv.className = "track__item padding";
+ 		 trackDiv.id = id;
+ 		 
   		if (name !== "") {
   				content = `
-  						<div class="track__item" id="${id}">
-  								<div class="track__number">${i+1}</div>
-  								<div class="track__info">
-  										<p class="track__name">${name}</p>
-  										<p class="track__artists"></p>
-  								</div>
-  								<button class="btn">
-  										<img class="track__three-dots" src="../icons/three-dots.png" />
-  								</button>
-  						</div>`;
-  				i++;
-  				trackSection.insertAdjacentHTML("beforeend", content);
+  						<div class="track__number">
+  								<p>${trackNo++}</p>
+  								<i class="fa-solid fa-play fa-lg play-button"></i>
+  						</div>
+  						<div class="track__info">
+  								<p class="track__name line-clamp">${name}</p>
+  								<p class="track__artists line-clamp">${Array.from(artists, artist => artist.name).join(", ")}</p>
+  						</div>
+  						<button class="bg-none track__menu">
+  								<i class="fa-solid fa-ellipsis-vertical fa-2xl"></i>
+  						</button>`;
+  			  				
+  			trackDiv.innerHTML = content;
+  			trackDiv.addEventListener("click", () => {
+  					onTrackClick.call(trackDiv, item.track)
+  			});  			
+  				trackSection.insertAdjacentElement("beforeend", trackDiv);
+  			playlistTotalTime += duration_ms;
   		}
-  })
+  });
+  return playlistTotalTime;
+}
+
+
+function onTrackSelection(id) {
+		
+}
+
+
+function onTrackClick( { name, id, duration_ms, artists, album: { images } } ) {
+		const trackImg = document.getElementById("track-image");
+		const trackName = document.getElementById("track-name");
+		const trackArtists = document.getElementById("track-artists");
+		const trackDuration = document.getElementById("track-length");
+	
+	// change current selected track bg-color
+		currentTrack?.classList.remove("bg-gray", "selected");
+		this.classList.add("bg-gray", "selected");
+		currentTrack = this;
+		
+		trackImg.src = images.find(img => img.height === 64).url;
+		trackName.textContent = name;
+		trackArtists.textContent = Array.from(artists, artist => artist.name).join(", ");
+				
+		trackDuration.textContent = "00:30";
 }
 
 
@@ -146,10 +237,16 @@ function loadSection(section) {
 				if (section.type === SECTIONTYPE.dashboard) {
 						fillDashboardContent();	
 						playlists();
+						mainContent.classList.add("padding")
 				} else if (section.type === SECTIONTYPE.playlist) {
 						fillPlaylistContent(section.id)
 				}
 }
+
+
+profileBtn.addEventListener("click", function() {		
+		profileBtn.ariaExpanded = profileBtn.ariaExpanded === "false" ? "true": "false";
+});
 
 
 logOutBtn.addEventListener("click", logOut);
