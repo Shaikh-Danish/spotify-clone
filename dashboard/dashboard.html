@@ -2,111 +2,113 @@
 <html lang="en">
 <head>
 		<meta charset="UTF-8">
-		<!--<meta name="viewport" content="width=device-width, initial-scale=1.0"/>-->
-		
+		<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 		<link rel="stylesheet" href="./dashboard.css"></link>
 		<title>Spotify</title>
-		<script src="../common.js" defer></script>
-		<script src="../api.js" defer></script>
-	 <script src="./dashboard.js" defer></script>
-	 
 </head>
 <body>
-		<header class="header padding">
-				<div id="user-option-btn" class="user-option__btn bg-none flex" aria-expanded="false">
-						<!-- user profile icon -->
-						<span class="user__profile">
-								<i id="user-profile-icon" class="fa-regular fa-user"></i>
-						</span>
-					 <span class="user__profile-name" id="user-name"></span>
-					 <!-- arrow down -->
-						<span class="arrow-down">
-								<i class="fa-solid fa-caret-down"></i>
-						</span>
-						<ul class="user-option__list">
+		<header class="header flex align-center">
+				<section class="user relative">
+				  <button id="user-option-btn" class="user-option__btn bg-none flex align-center outline-none" aria-expanded="false">
+								<!-- user profile icon -->
+								<span class="user__profile">
+										<i id="user-icon" class="fa-regular fa-user user__profile-img"></i>
+								</span>
+								<!-- user name -->
+							 <span class="user__profile-name" id="user-name"></span>
+					 		<!-- arrow down -->
+								<span class="arrow-down">
+										<i class="fa-solid fa-caret-down"></i>
+								</span>
+						</button>
+						<ul class="user-option__list absolute">
 								<li class="user-option__item" id="log-out">
 										<a href="#">log out</a>
 								</li>
 						</ul>
-				</div>
+				</section>
 		</header>
 		
-		<main id="content" class="content padding">
-	
+		<main id="content" class="content">
+				<!--<section id="user-section" class="user-section">
+						
+				</section>-->
 		</main>
 		
-		<section class="now-playing padding">
+		<section class="now-playing clr-secondary bg-secondary padding">
 				
 				<section class="song">
 						<div class="song__image">
 								<img id="track-image" src="" alt="">
 						</div>
 						<div class="song__info">
-								<p id="track-name" class="song__name">song name</p>
-								<p id="track-artists" class="song__artist">song artist</p>
+								<p id="track-name" class="song__name line-clamp"></p>
+								<p id="track-artists" class="song__artist line-clamp"></p>
 						</div>
+						<div id="song-play-btn-mob" class="mobile-play-btn flex flex-center">
+								<i class="fa-solid fa-play fa-xl"></i>
+						</div>
+						<div id="progress-bar-mobile" class="mobile-progress-bar absolute"></div>
 				</section>
 				
-				<section class="song-control">
+				<section class="song-control align-center flex-column">
 						<div class="control-btn">
-								<!-- backward button -->
-								<button class="bg-none song__control-btn">
+								<!-- previous button -->
+								<button id="prev-track" class="bg-none song__control-btn">
 										<i class="fa-solid fa-backward-step fa-2xl"></i>
 								</button>
 								<!-- play song button -->
-								<button class="bg-none song__control-btn song--play-btn">
+								<button id="song-play-btn" class="bg-none song__control-btn song--play-btn">
 									 <i class="fa-solid fa-circle-play fa-2xl"></i>
 								</button>
-								<!-- forward button -->
-								<button class="bg-none song__control-btn">
+								<!-- next button -->
+								<button id="next-track" class="bg-none song__control-btn">
 										<i class="fa-solid fa-forward-step fa-2xl"></i>
-										</button>
+								</button>
 						</div>
-						<div class="song__timeline">
-								<span class="song__time-completed">0:00</span>
-								<div class="song__progress"></div>
+						<div class="song__timeline flex flex-center">
+								<span id="track-time-completed" class="song__time-completed">0:00</span>
+								<div id="track-progress-bar" class="song__progress"></div>
 								<span id="track-length" class="song__total-time">0:00</span>
 						</div>
 				</section>
 				
-				<section class="volume-control">
+				<section class="volume-control flex-center">
 						<!-- volume button -->
 						<button class="bg-none song__control-btn">
 								<i class="fa-solid fa-volume-low fa-xl"></i>
 						</button>
 						<!-- volume slider -->
-						<input class="volume-slider" type="range" value="100" min="0" max="100" />
+						<input id="volume-slider" class="volume-slider outline-none" type="range" value="100" min="0" max="100" />
 				</section>
 		</section>
 		
-		<section class="side-nav padding">
-				<nav>
-						<ul class="nav-items">
-								<!-- home button -->
-								<li class="side-nav__homepage">
-										<button class="bg-none clr-white">
-												<i class="fa-solid fa-house fa-3x"></i>
-										</button>
-								</li>
-								<!--<li class="side-nav__search">
-										<button class="bg-none">
-												<img src="icons/search.png" alt="search" class="img-width clr-white">
-										</button>
-								</li>
-								<li class="side-nav__playlist">
-										<button class="bg-none">
-												<img src="./icons/playlist.png" alt="playlist" class="img-width clr-white">
-										</button>
-								</li>
-								<li class="side-nav__profile">
-										<button class="bg-none">
-												<img src="./icons/recent.png" alt="recent" class="img-width clr-white">
-										</button>
-								</li>-->
-						</ul>
-				</nav>
+		<section class="side-nav flex align-center">
+				<ul class="nav-items flex align-center" id="nav-items">
+						<!-- home -->
+						<li id="home" class="nav__item active">
+								<i class="fa-solid fa-house fa-xl"></i>	
+						</li>
+						<!-- search -->
+						<li id="search" class="nav__item">
+								<i class="fa-solid fa-magnifying-glass fa-xl"></i>
+						</li>
+						<!-- playlist -->
+						<li id="playlist" class="nav__item">							
+								<i class="fa-solid fa-music fa-xl"></i>
+						</li>
+						<!-- profile -->
+						<li id="profile" class="nav__item nav__profile">
+								<i class="fa-regular fa-circle-user fa-xl"></i>
+						</li>
+				</ul>
 		</section>
-		
 		<script src="https://kit.fontawesome.com/cf496ac0ba.js" crossorigin="anonymous"></script>
+		<script src="../common.js"></script>
+		<script src="../api.js"></script>
+		<!--<script src="./js/search.js"></script>
+	 <script src="./js/playlist.js"></script>
+	 <script src="./js/profile.js"></script>-->
+	 <script src="./dashboard.js" type="module"></script>
 </body>
 </html>

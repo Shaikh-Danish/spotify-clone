@@ -1,0 +1,120 @@
+/*@import '../../common.css';*/
+
+
+/* Flex */
+.flex {
+		display: flex;
+}
+
+.flex-center {
+		align-items: center;
+		justify-content: center;
+}
+
+.align-center {
+		align-items: center;
+}
+
+.flex-column {
+		flex-direction: column;
+}
+
+.flex-row {
+		flex-direction: row;
+}
+
+.flex-wrap {
+		flex-wrap: wrap;
+}
+
+/* color */ 
+
+.clr-primary {
+		color: var(--clr-primary);
+}
+
+.clr-secondary {
+		color: var(--clr-secondary);
+}
+
+.clr-green {
+		color: var(--clr-darkgreen);
+}
+
+.bg-primary {
+		background-color: var(--bg-primary);
+}
+
+.bg-secondary {
+		background-color: var(--bg-secondary);
+}
+
+.bg-gray {
+		background-color: var(--bg-gray);
+}
+
+.bg-lightgray {
+		background-color: var(--bg-lightgray);
+}
+
+
+/* line clamp */
+.line-clamp {
+		display: -webkit-box;
+		-webkit-box-orient: vertical;
+		overflow: hidden;		
+}
+
+.line-clamp-1 {
+		-webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+		-webkit-line-clamp: 2;
+}
+
+
+/* position */ 
+
+.relative {
+		position: relative;
+}
+
+.absolute {
+		position: absolute;
+}
+
+
+/* others */
+
+.outline-none {
+		outline: none;
+}
+
+.img-width {
+		width: 2em;
+		border-radius: 50%;
+}
+
+.bg-none {
+		background: none;
+		border: none;
+}
+
+.border-none {
+		border: none;
+}
+
+.padding {
+		padding: 0 1em;
+}
+
+.gradient {
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100vw;
+		height: 50vh;
+		background: linear-gradient(to bottom, var(--clr-maroon) 65%, var(--clr-bg-primary));
+		z-index: -1;
+}
