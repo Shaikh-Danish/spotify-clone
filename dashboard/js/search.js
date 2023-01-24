@@ -9,7 +9,6 @@ function initSearch() {
 		});
 }
 
-
 async function getTracks(searchText) {
 		const trackSection = document.querySelector(".track-section");
 		const { tracks: { items } } = await fetchRequest(ENDPOINT.search + `/?q=${encodeURIComponent(searchText)}&type=track&limit=10`);
@@ -24,11 +23,10 @@ async function getTracks(searchText) {
 		addEventOnTracks(trackSection, items);
 }
 
-
 function fillSearchContent() {
-		content = `
-				<h2>Search</h2>
-	 		<section class="search flex relative">
+		let content = `
+				<h2 class="padl-1">Search</h2>
+	 		<section class="search flex relative padl-1 padr-1">
 	 				<i class="fa fa-solid fa-magnifying-glass absolute search-icon"></i>
 	 				<!-- search input box -->
 	 				<input id="search-box" class="search-box outline-none border-none" type="text" placeholder="What do you want to listen to?">

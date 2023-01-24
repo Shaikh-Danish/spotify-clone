@@ -1,10 +1,10 @@
 "use strict";
 
 let currentTrack = null;
-let currentSection = document.getElementById("home");
+let currentSection = document.getElementById("dashboard");
 let tracksObj = {};
 
-// Track Elements
+// track progress bar for mobile and desktop
 const trackProgressBarMob = document.getElementById("progress-bar-mobile");
 const trackProgressBar = document.getElementById("track-progress-bar");
 const trackPlayElMob = document.getElementById("song-play-btn-mob");
@@ -30,15 +30,20 @@ document.addEventListener("DOMContentLoaded", function() {
 
 // render user profile 
 async function loadUserProfile() {
-	 const { display_name, images } = await fetchRequest(ENDPOINT.userinfo);
-	
+	 const { display_name, images, followers } = await fetchRequest(ENDPOINT.userinfo);
+	 
 		const profileImg = document.getElementById("user-icon");
 		const displayNameEl = document.getElementById("user-name");
 		
 		displayNameEl.textContent = display_name;		
 		if (images?.length) {
 				profileImg.outerHTML = `<img class="img-width" src="${images[0].url}" alt="profile">`;
+				localStorage.setItem("user_url", images[0].url);
 		}
+		
+		localStorage.setItem("user_name", display_name);
+		localStorage.setItem("user_follower", followers.total);
+		console.log(localStorage)
 }
 
 function loadSection(section) {
@@ -51,6 +56,7 @@ function loadSection(section) {
 		} else if (section.type === SECTIONTYPE.userPlaylist) {
 				fillUserPlaylistContent();
 		} else if (section.type === SECTIONTYPE.userProfile) {
+				//fillProfileContent();
 				fillProfileContent();
 		} 
 }
@@ -99,14 +105,18 @@ function insertPlaylists(sectionId, playlistItems) {
 }
 
 function generatePlaylistHtml(type, { name,  images, description, followers, id = "" }) {
-		return `
-				<div class="${type} flex flex-column" id="${id}">
-						<img src="${(images[0].url ?? images)}" alt="${name}" class="playlist-img">
-						<p class="playlist-name line-clamp line-clamp-1">${name}</p>
-						<p class="playlist-description line-clamp line-clamp-2 clr-secondary">${description}</p>
-						<p id="playlist-likes" class="playlist-likes clr-secondary"></p>
-				</div>
-		`;
+		try {
+				return `
+						<div class="${type} flex flex-column" id="${id}">
+								<img src="${(images[0].url ?? images)}" alt="${name}" class="playlist-img">
+								<p class="playlist-name line-clamp line-clamp-1">${name}</p>
+								<p class="playlist-description line-clamp line-clamp-2 clr-secondary">${description}</p>
+								<p id="playlist-likes" class="playlist-likes clr-secondary"></p>
+						</div>
+				`;
+		} catch (err) {
+				return "";
+		}
 }
 
 function addEventOnPlaylist(sectionId) {
@@ -143,7 +153,9 @@ async function fillPlaylistContent(playlistId) {
 						<div class="tracks" id="tracks"></div>
 				</section>`;
 		
-		const playlistTotalTime = loadTracks(tracksObj);	playlistLikesTimeHtml(response.followers.total, playlistTotalTime);
+		const playlistTotalTime = loadTracks(tracksObj);
+		console.log(playlistTotalTime)
+		playlistLikesTimeHtml(response.followers.total, playlistTotalTime);
 		initSongControls();
 }
 
@@ -157,7 +169,7 @@ function loadTracks( { items } ) {
 		items.forEach((item, i) => {   
 				if (item.track && item.track.name !== "" && item.track.preview_url !== null) {
   				trackSection.innerHTML += generateTracksHtml(item.track, i, trackNo++);
-  				playlistTime += item.duration_ms;
+  				playlistTime += item.track.duration_ms;
   		}
   });
   addEventOnTracks(trackSection, items);
@@ -286,18 +298,14 @@ function getNewTrackObj(track) {
 
 function pageNavigation(navEl) {
 		const section = {};
+		
 		if (navEl.classList.contains("nav__item")) {
 				const isClicked = navEl.classList.contains("active");
-				if (navEl.id === "search" && !isClicked) {
-						section.type = "search";				
-				} else if (navEl.id === "home" && !isClicked) {
-						section.type = "dashboard";
-				} else if (navEl.id === "playlist" && !isClicked) {
-						section.type = "user-playlist";
-				} else if (navEl.id === "profile" && !isClicked) {
-						section.type = "user-section";
-				} 
-			
+				
+				if (navEl.id && !isClicked) {
+						section.type = navEl.id;
+				}			
+				
   		currentSection.classList.remove("active");
 				currentSection = navEl;
 				navEl.classList.add("active");
@@ -332,9 +340,13 @@ function stopStartTrack() {
 		const navSection = document.getElementById("nav-items");
 		const volumeSlider = document.getElementById("volume-slider");
 		
-		profileBtn.addEventListener("click", function() {		
+		profileBtn.addEventListener("click", async function() {		
 				profileBtn.ariaExpanded = profileBtn.ariaExpanded === "false" ? "true": "false";
 				//fillDashboardContent()
+				let res = await fetchRequest("me/player");
+				console.log(res)
+				res = await fetchRequest("me/player/currently-playing");
+				console.log(res)
 		});
 		
 		logOutBtn.addEventListener("click", logOut);

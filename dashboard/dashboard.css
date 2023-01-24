@@ -68,6 +68,7 @@
 .content {
 		width: 100%;
 		padding-bottom: 7em;
+		
 }
 
 .content > section {
@@ -352,7 +353,7 @@
 
 .search-icon {
 		top: .8em;
-		left: .4em;
+		left: 1.4em;
 		color: #000;
 }
 
@@ -376,6 +377,7 @@
 
 .user__profile .user__icon {
 		width: 200px;
+		border-radius: 100%;
 }
 
 .user__profile .user__name {
@@ -384,20 +386,32 @@
 
 .user-section__details {
 		display: flex;
+		font-size: .8rem;
 		justify-content: center;
-		background: red;
-		gap: 0 1em;
+		gap: 0 2.5em;
+		letter-spacing: .5px;
+		margin: 1em 0 2.7em 0;
 }
 
 .user-section__details > div p:first-child {
+		color: var(--clr-darkgreen);
 		font-weight: 500;
-		color: var(--clr-maroon);
+		font-size: 1.1rem;
 }
 
 .user-section__details p {
 	 margin: .3em 0;
 }
 
+.logout-btn {
+		text-transform: uppercase;
+		font-weight: 500;
+		font-size: 1rem;
+		letter-spacing: .5px;
+		border: 1px solid var(--clr-primary);
+		padding: .6em 2em;
+		border-radius: 25px;
+}
 
 @media screen and (min-width:768px){
 		body {

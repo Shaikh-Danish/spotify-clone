@@ -12,14 +12,14 @@
 		--clr-darkgreen: #1DB954;
 		--clr-maroon: #962807D0;
 		
-		--bg-primary: #181818;
-		--bg-secondary: #444444;
+		--bg-primary: #040406;
+		--bg-secondary: #181818;
 		--bg-lightgray: #C0C0C064; 
 		--bg-gray: #C0C0C0A1;
 }
 
 body {
-		background-color: var(--bg-primary);
+		background-color: var(--bg-secondary);
 		color: var(--clr-primary);
 		display: flex;
 		flex-direction: column;
