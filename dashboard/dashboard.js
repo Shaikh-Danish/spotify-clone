@@ -43,7 +43,6 @@ async function loadUserProfile() {
 		
 		localStorage.setItem("user_name", display_name);
 		localStorage.setItem("user_follower", followers.total);
-		console.log(localStorage)
 }
 
 function loadSection(section) {
@@ -56,7 +55,6 @@ function loadSection(section) {
 		} else if (section.type === SECTIONTYPE.userPlaylist) {
 				fillUserPlaylistContent();
 		} else if (section.type === SECTIONTYPE.userProfile) {
-				//fillProfileContent();
 				fillProfileContent();
 		} 
 }
@@ -154,7 +152,6 @@ async function fillPlaylistContent(playlistId) {
 				</section>`;
 		
 		const playlistTotalTime = loadTracks(tracksObj);
-		console.log(playlistTotalTime)
 		playlistLikesTimeHtml(response.followers.total, playlistTotalTime);
 		initSongControls();
 }
@@ -341,12 +338,7 @@ function stopStartTrack() {
 		const volumeSlider = document.getElementById("volume-slider");
 		
 		profileBtn.addEventListener("click", async function() {		
-				profileBtn.ariaExpanded = profileBtn.ariaExpanded === "false" ? "true": "false";
-				//fillDashboardContent()
-				let res = await fetchRequest("me/player");
-				console.log(res)
-				res = await fetchRequest("me/player/currently-playing");
-				console.log(res)
+				profileBtn.ariaExpanded = profileBtn.ariaExpanded === "false" ? "true": "false";				
 		});
 		
 		logOutBtn.addEventListener("click", logOut);
